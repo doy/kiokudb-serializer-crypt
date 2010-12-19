@@ -55,9 +55,9 @@ dependency list for your application).
 =cut
 
 has crypt_cipher => (
-    is       => 'ro',
-    isa      => 'Str',
-    default  => 'Rijndael',
+    is      => 'ro',
+    isa     => 'Str',
+    default => 'Rijndael',
 );
 
 =attr crypt_mode
@@ -70,9 +70,9 @@ your application).
 =cut
 
 has crypt_mode => (
-    is       => 'ro',
-    isa      => 'Str',
-    default  => 'CFB',
+    is      => 'ro',
+    isa     => 'Str',
+    default => 'CFB',
 );
 
 =attr crypt
