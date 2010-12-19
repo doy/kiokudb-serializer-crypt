@@ -7,7 +7,32 @@ use Crypt::Util;
 
 =head1 SYNOPSIS
 
+  package My::Serializer;
+  use Moose;
+  with 'KiokuDB::Serializer', 'KiokuDB::Serializer::Crypt';
+
+  sub serialize { ... }
+  sub deserialize { ... }
+
 =head1 DESCRIPTION
+
+This is a role which wraps the C<serialize> and C<deserialize> methods of a
+L<KiokuDB::Serializer> class, encrypting the results before storing them into
+the database, and decrypting them when retrieving them. It can use several
+different encryption schemes (it's based on L<Crypt::Util>, so anything that
+that supports).
+
+Unless you are writing a custom serializer, you probably want to look at the
+classes which consume this role: L<KiokuDB::Serializer::JSON::Crypt>,
+L<KiokuDB::Serializer::YAML::Crypt>, and
+L<KiokuDB::Serializer::Storable::Crypt>.
+
+=cut
+
+=attr crypt_key
+
+The encryption key to use for encrypting and decrypting. Corresponds to
+C<default_key> in L<Crypt::Util>.
 
 =cut
 
@@ -17,11 +42,29 @@ has crypt_key => (
     required => 1,
 );
 
+=attr crypt_cipher
+
+The encryption cipher to use. Corresponds to C<default_cipher> in
+L<Crypt::Util>, and defaults to C<Rijndael>. You must ensure the appropriate
+cipher backend is installed (by adding, for instance, L<Crypt::Rijndael> to the
+dependency list for your application).
+
+=cut
+
 has crypt_cipher => (
     is       => 'ro',
     isa      => 'Str',
     default  => 'Rijndael',
 );
+
+=attr crypt_mode
+
+The encryption mode to use. Corresponds to C<default_mode> in L<Crypt::Util>,
+and defaults to C<CFB>. You must ensure the appropriate mode backend is
+installed (by adding, for instance, L<Crypt::CFB> to the dependency list for
+your application).
+
+=cut
 
 has crypt_mode => (
     is       => 'ro',
@@ -29,6 +72,14 @@ has crypt_mode => (
     required => 1,
     default  => 'CFB',
 );
+
+=attr crypt
+
+The L<Crypt::Util> object which will be used for the encryption. Typically,
+this will be automatically created based on the other attribute values, but an
+already-built object can be passed in here for more complicated usages.
+
+=cut
 
 has crypt => (
     is      => 'ro',
