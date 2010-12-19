@@ -40,6 +40,7 @@ has crypt_key => (
     is      => 'ro',
     isa     => 'Str',
     default => sub {
+        my $self = shift;
         confess "The 'crypt_key' attribute for " . blessed($self)
               . " is required if the 'crypt' attribute is not given";
     },
