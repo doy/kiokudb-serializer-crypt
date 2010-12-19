@@ -69,7 +69,6 @@ your application).
 has crypt_mode => (
     is       => 'ro',
     isa      => 'Str',
-    required => 1,
     default  => 'CFB',
 );
 
