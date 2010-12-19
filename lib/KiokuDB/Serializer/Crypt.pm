@@ -37,9 +37,12 @@ C<default_key> in L<Crypt::Util>.
 =cut
 
 has crypt_key => (
-    is       => 'ro',
-    isa      => 'Str',
-    required => 1,
+    is      => 'ro',
+    isa     => 'Str',
+    default => sub {
+        confess "The 'crypt_key' attribute for " . blessed($self)
+              . " is required if the 'crypt' attribute is not given";
+    },
 );
 
 =attr crypt_cipher
