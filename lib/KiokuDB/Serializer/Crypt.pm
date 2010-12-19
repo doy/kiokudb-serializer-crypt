@@ -1,8 +1,15 @@
 package KiokuDB::Serializer::Crypt;
 use Moose::Role;
 use namespace::autoclean;
+# ABSTRACT: encrypt data stored in kiokudb
 
 use Crypt::Util;
+
+=head1 SYNOPSIS
+
+=head1 DESCRIPTION
+
+=cut
 
 has crypt_key => (
     is       => 'ro',
@@ -55,5 +62,49 @@ around deserialize => sub {
 
     return $self->$orig($self->decrypt_string($collapsed), @args);
 };
+
+=head1 BUGS
+
+No known bugs.
+
+Please report any bugs through RT: email
+C<bug-kiokudb-serializer-crypt at rt.cpan.org>, or browse to
+L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=KiokuDB-Serializer-Crypt>.
+
+=head1 SEE ALSO
+
+L<KiokuDB>
+
+L<Crypt::Util>
+
+=head1 SUPPORT
+
+You can find this documentation for this module with the perldoc command.
+
+    perldoc KiokuDB::Serializer::Crypt
+
+You can also look for information at:
+
+=over 4
+
+=item * AnnoCPAN: Annotated CPAN documentation
+
+L<http://annocpan.org/dist/KiokuDB-Serializer-Crypt>
+
+=item * CPAN Ratings
+
+L<http://cpanratings.perl.org/d/KiokuDB-Serializer-Crypt>
+
+=item * RT: CPAN's request tracker
+
+L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=KiokuDB-Serializer-Crypt>
+
+=item * Search CPAN
+
+L<http://search.cpan.org/dist/KiokuDB-Serializer-Crypt>
+
+=back
+
+=cut
 
 1;
