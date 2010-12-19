@@ -56,6 +56,4 @@ around deserialize => sub {
     return $self->$orig($self->decrypt_string($collapsed), @args);
 };
 
-no Moose::Role;
-
 1;
