@@ -1,18 +1,31 @@
 package KiokuDB::Serializer::Crypt;
-use Moose::Role;
+use Moose;
 use namespace::autoclean;
 # ABSTRACT: encrypt data stored in kiokudb
 
 use Crypt::Util;
+use KiokuDB::Backend::Hash;
+use KiokuDB::Backend::Serialize;
 
 =head1 SYNOPSIS
 
-  package My::Serializer;
-  use Moose;
-  with 'KiokuDB::Serializer', 'KiokuDB::Serializer::Crypt';
+  use KiokuDB::Util;
+  use KiokuDB::Serializer::Crypt;
 
-  sub serialize { ... }
-  sub deserialize { ... }
+  my $dsn    = '...';
+  my $secret = '...';
+
+  my $backend = KiokuDB::Util::dsn_to_backend(
+      $dsn,
+      serializer => KiokuDB::Serializer::Crypt->new(
+          serializer   => 'json',
+          crypt_cipher => 'Rijndael',
+          crypt_mode   => 'CFB',
+          crypt_key    => $secret,
+      ),
+  )
+
+  my $d = KiokuDB->new(backend => $backend);
 
 =head1 DESCRIPTION
 
@@ -100,6 +113,22 @@ has crypt => (
     handles => ['encrypt_string', 'decrypt_string'],
 );
 
+=attr serializer
+
+The underlying serializer to use. KiokuDB will use this serializer to get a
+string representation of the object which will then be encrypted. Defaults to
+'storable'.
+
+=cut
+
+has serializer => (
+    is      => 'ro',
+    does    => 'KiokuDB::Backend::Serialize',
+    coerce  => 1,
+    default => 'storable',
+    handles => 'KiokuDB::Backend::Serialize',
+);
+
 around serialize => sub {
     my $orig = shift;
     my $self = shift;
@@ -116,6 +145,8 @@ around deserialize => sub {
 
     return $self->$orig($self->decrypt_string($collapsed), @args);
 };
+
+with 'KiokuDB::Backend::Serialize';
 
 =head1 BUGS
 
