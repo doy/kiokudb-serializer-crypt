@@ -1,7 +1,7 @@
 package KiokuDB::Serializer::Crypt;
 use Moose;
 use namespace::autoclean;
-# ABSTRACT: encrypt data stored in kiokudb
+# ABSTRACT: encrypt data stored in L<KiokuDB>
 
 use Crypt::Util;
 use KiokuDB::Backend::Hash;
