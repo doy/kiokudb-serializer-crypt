@@ -43,6 +43,7 @@ C<default_key> in L<Crypt::Util>.
 has crypt_key => (
     is      => 'ro',
     isa     => 'Str',
+    lazy    => 1,
     default => sub {
         my $self = shift;
         confess "The 'crypt_key' attribute for " . blessed($self)
