@@ -29,16 +29,7 @@ use KiokuDB::Backend::Serialize;
 
 =head1 DESCRIPTION
 
-This is a role which wraps the C<serialize> and C<deserialize> methods of a
-L<KiokuDB::Serializer> class, encrypting the results before storing them into
-the database, and decrypting them when retrieving them. It can use several
-different encryption schemes (it's based on L<Crypt::Util>, so anything that
-that supports).
-
-Unless you are writing a custom serializer, you probably want to look at the
-classes which consume this role: L<KiokuDB::Serializer::JSON::Crypt>,
-L<KiokuDB::Serializer::YAML::Crypt>, and
-L<KiokuDB::Serializer::Storable::Crypt>.
+This is a custom serializer for L<KiokuDB>, which wraps an existing serializer, encrypting the data before it is stored, and decrypting the data as it is retrieved. It can use several different encryption schemes (it's based on L<Crypt::Util>, so anything that that supports).
 
 =cut
 
