@@ -138,6 +138,15 @@ around deserialize => sub {
     return $self->$orig($self->decrypt_string($collapsed), @args);
 };
 
+sub default_typemap {
+    my $self = shift;
+
+    return $self->serializer->default_typemap
+        if $self->serializer->default_typemap;
+
+    return KiokuDB::Typemap->new;
+}
+
 with 'KiokuDB::Backend::Serialize';
 
 =head1 BUGS
