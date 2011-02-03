@@ -191,6 +191,12 @@ L<http://search.cpan.org/dist/KiokuDB-Serializer-Crypt>
 
 =back
 
+=begin Pod::Coverage
+
+default_typemap
+
+=end Pod::Coverage
+
 =cut
 
 1;
