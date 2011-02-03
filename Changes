@@ -1,6 +1,8 @@
 Revision history for KiokuDB-Serializer-Crypt
 
 {{$NEXT}}
+
+0.02  2011-02-02
       - need to pass default_typemap through to the contained serializer
 
 0.01  2010-12-21
